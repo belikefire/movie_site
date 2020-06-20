@@ -14,12 +14,17 @@ const generateUrlForGenres = ()=>{
     return `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
 }
 
+const generateUrlForTrendingMovies = ()=>{
+    return `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`
+} 
+
 module.exports = {
     axios,
     API_KEY,
     generateUrlForMovie,
     generateUrlForSearches,
-    generateUrlForGenres
+    generateUrlForGenres,
+    generateUrlForTrendingMovies
 }
 
 

@@ -15,6 +15,7 @@ const movieType = gql`
     extend type Query{
         getMovie(id: Int!): Movie
         searchMovies(keyword: String!):[Movie!],
+        getTrendingMovies:[Movie!]!
     }
 `
 

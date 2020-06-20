@@ -46,10 +46,8 @@ const userResolver = {
 
             let updatedUser = null
             if(currentUser.favouritemovies !== null && currentUser.favouritemovies.includes(movieId)){
-                console.log('remove')
                 updatedUser = await db.updateMoviesListForUser(args.username,movieId,'remove')
             }else{
-                console.log('append')
                 updatedUser = await db.updateMoviesListForUser(args.username,movieId,'append')
 
             }
