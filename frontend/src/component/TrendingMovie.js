@@ -5,6 +5,7 @@ import Movie from './Movie'
 const TRENDING_MOVIE = gql`
 query {
     getTrendingMovies{
+        tmdbID
         title
         releaseDate
         imageUrl

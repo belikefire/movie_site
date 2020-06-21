@@ -1,8 +1,10 @@
-import React,{useState, useEffect} from 'react';
+import React from 'react';
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom'
 import './styles.css'
-import SearchMovie from './component/SearchMovie';
+import SearchField from './component/SearchField';
 import TrendingMovie from './component/TrendingMovie'
+import MovieDetail from './component/MovieDetail'
+import SearchMovieResult from './component/SearchMovieResult';
 
 const App = ()=>{
   
@@ -23,11 +25,17 @@ const App = ()=>{
 
       <Switch>
         <div className="displayComponent">
-          <Route path="/search">
-            <SearchMovie/>
+          <Route exact path="/search">
+            <SearchField/>
          </Route>
          <Route path="/trending">
             <TrendingMovie/>
+         </Route>
+         <Route path="/movie/:id">
+           <MovieDetail/>
+         </Route>
+         <Route path="/search/:keyword">
+           <SearchMovieResult/>
          </Route>
         </div>
        
