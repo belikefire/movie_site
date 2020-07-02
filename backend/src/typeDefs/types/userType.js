@@ -12,14 +12,20 @@ const userType = gql `
         value:String!
     }
 
+    type Data{
+        isAppend:Boolean!
+        favouriteMovies: [Int!]
+    }
+
     extend type Query{
         me : User
+        getUser(username:String!): User
     }
 
     type Mutation{
         createUser(username:String!,password:String!):User
         login(username:String!,password:String!):Token 
-        updateFavouriteMovies(username:String!,tmdbId:Int!):User
+        updateFavouriteMovies(tmdbId:Int!):Data
     }
 `
 

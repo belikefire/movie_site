@@ -9,6 +9,10 @@ const userResolver = {
     Query:{
         me:(root,args,context)=>{
             return context.currentUser
+        },
+        getUser: async (root,args)=>{
+            const user = await db.getUser(args.username)
+            return user;
         }
     },
     Mutation:{
@@ -26,17 +30,19 @@ const userResolver = {
             const passwordMatch = user === undefined ? false : await bcrypt.compare(args.password,user.password)
 
             if(!(user && passwordMatch)){
-                throw new Error("Wrong user credentials")
+                throw new Error("Incorrect user credentials - please try again.")
             }
 
             const userToken = {
                 username: user.username,
                 id: user.id
             }
-
+    
             return {value:jwt.sign(userToken,JWT_SECRET)}
         },
         updateFavouriteMovies: async (root,args,context) =>{
+            let updatedUser = null
+            let data = null
             const movieId = args.tmdbId
             const currentUser = context.currentUser
 
@@ -44,16 +50,25 @@ const userResolver = {
                 throw new Error("Please log in before your add to favourite")
             }
 
-            let updatedUser = null
+           
             if(currentUser.favouritemovies !== null && currentUser.favouritemovies.includes(movieId)){
-                updatedUser = await db.updateMoviesListForUser(args.username,movieId,'remove')
+                updatedUser = await db.updateMoviesListForUser(currentUser.username,movieId,'remove')
+                data = {
+                    isAppend: false,
+                    favouriteMovies : updatedUser.favouritemovies
+                } 
             }else{
-                updatedUser = await db.updateMoviesListForUser(args.username,movieId,'append')
-
+                updatedUser = await db.updateMoviesListForUser(currentUser.username,movieId,'append')
+                data = {
+                    isAppend: true,
+                    favouriteMovies : updatedUser.favouritemovies
+                } 
             }
             context.currentUser = updatedUser
-            return updatedUser
+            
+            return data
         }
+       
         
     },
     User:{

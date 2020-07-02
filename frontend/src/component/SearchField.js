@@ -12,7 +12,7 @@ const SearchField = ()=>{
       if(event.target.value === ""){
         setErrorMsg("Please type keyword")
       }else{
-        history.push(`/search/${event.target.value}`)
+        history.push(`/search/k=${event.target.value}&page=1`)
       }
     }
   }

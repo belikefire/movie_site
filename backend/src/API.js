@@ -2,8 +2,8 @@ const axios = require('axios');
 
 const API_KEY = '550ea1ca3a15bdae8333716d5757c1f0'
 
-const generateUrlForSearches = (keyword)=>{
-    return `https://api.themoviedb.org/3/search/movie/?api_key=${API_KEY}&query=${keyword}`
+const generateUrlForSearches = (keyword,pageNumber)=>{
+    return `https://api.themoviedb.org/3/search/movie/?api_key=${API_KEY}&query=${keyword}&page=${pageNumber}`
 }
 
 const generateUrlForMovie = (id)=>{
@@ -14,9 +14,23 @@ const generateUrlForGenres = ()=>{
     return `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
 }
 
-const generateUrlForTrendingMovies = ()=>{
-    return `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`
+const generateUrlForTrendingMovies = (pageNumber)=>{
+    return `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}&page=${pageNumber}`
 } 
+
+const generateUrlForPopularMovies = (pageNumber)=>{
+    return `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNumber}`
+} 
+
+
+const generateUrlForRecommendedMovie = (id)=>{
+    return `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${API_KEY}&page=1`
+}
+
+const generateUrlForCasts = (id)=>{
+    return `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}`
+}
+
 
 module.exports = {
     axios,
@@ -24,7 +38,10 @@ module.exports = {
     generateUrlForMovie,
     generateUrlForSearches,
     generateUrlForGenres,
-    generateUrlForTrendingMovies
+    generateUrlForTrendingMovies,
+    generateUrlForRecommendedMovie,
+    generateUrlForCasts,
+    generateUrlForPopularMovies
 }
 
 
