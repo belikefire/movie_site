@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {BrowserRouter as Router,Switch,Route,Link,Redirect} from 'react-router-dom'
+import {BrowserRouter as Router,Switch,Route,Link,Redirect, useHistory} from 'react-router-dom'
 import './styles.css'
 import SearchField from './component/SearchField';
 import MovieList from './component/MovieList'
@@ -9,6 +9,7 @@ import LoginForm from './component/LoginForm'
 import { useApolloClient,gql,useQuery, useLazyQuery} from '@apollo/client';
 import Register from './component/Register';
 import FavouriteMovie from './component/FavouriteMovie';
+import Home from './component/Home'
 
 const GET_CURRENT_USER = gql`
 query{
@@ -21,6 +22,7 @@ query{
 `
 
 const App = (props)=>{
+  const history = useHistory()
   const [,setToken] = useState(null)
   const [user,setUser] = useState(null)
 
@@ -42,24 +44,29 @@ const App = (props)=>{
   return (
     <Router>
       <div className="top-nav-bar">
-      <Link className="link" to="/favourites">Favourite</Link>
-            {user === null ? <Link className="link" to = "/login">Login</Link> : <p className="link" style={{color:'blue'}}>{user.username}</p>}
-            {user && <button className="logout-button" onClick={logout}>Logout</button>}
+            <Link className="top-nav-button" style={{color:'darkblue',fontWeight:'bold'}} to = "/">Another Movie Database (AMDB)</Link>
+            <div className="flex-container">
+            {user === null ? <Link className="top-nav-button" to = "/login">Login</Link> : <p style={{color:'black'}}>{user.username}</p>}
+            {user && <button className="top-nav-button" onClick={logout}>logout</button>}
+            </div>
       </div>
-      <div className="flex-container">
-      <div>
+ 
+      <div className="sidebar-displaycomponent-container">
+      <div >
           <div className="side-nav-menu">
-          <Link className="link" to="/search">Search</Link>
-          <Link className="link" to="/trending/page=1">Trending</Link>
-          <Link className="link" to="/popular/page=1">Popular</Link>
-
-
+          <Link className="nav-menu-item-circle" to="/search">Search</Link>
+          <Link className="nav-menu-item-circle" to="/popular/page=1">Popular</Link>
+          <Link className="nav-menu-item-circle" to="/trending/page=1">Trending</Link>
+          <Link className="nav-menu-item-circle" to="/favourite">Favourite</Link>
         </div>
       </div>
      
 
       <Switch>
         <div className="displayComponent">
+        <Route exact path="/">
+            <Home/>
+          </Route>
           <Route exact path="/search" >
             <SearchField/>
          </Route>
@@ -81,9 +88,10 @@ const App = (props)=>{
           <Route exact path="/register" >
             <Register/>
          </Route>
-         <Route exact path ="/favourites">
+         <Route exact path ="/favourite">
             <FavouriteMovie user={user}/>
          </Route>
+         
         </div>
        
       </Switch>

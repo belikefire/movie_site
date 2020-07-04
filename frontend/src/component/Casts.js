@@ -20,9 +20,9 @@ const Casts = (props)=>{
             return 1
         }else if(window.innerWidth<800){
             return 2 
-        }else if(window.innerWidth<1050){
+        }else if(window.innerWidth<1070){
             return 3
-        }else if(window.innerWidth<1250){
+        }else if(window.innerWidth<1300){
             return 4
         }else if(window.innerWidth<1450){
             return 5

@@ -93,6 +93,9 @@ const Register = ()=>{
             setUsernameValidityMsg("Username can't be empty")
             setUsername(null)
 
+        }else if(target.value.length < 6){
+            setUsernameValidityMsg("minimum 6 character")
+            setUsername(null)
         }else{
             getUser({variables:{username:target.value}})
             setUsername(target.value)
@@ -152,8 +155,9 @@ const Register = ()=>{
                 }></input>
                 {password2ValidityMsg && <div>{password2ValidityMsg}</div>}
             </div>
-            <button type="submit" hidden={!requirementFulfilled}>Register</button> 
-
+                {requirementFulfilled ? <button type="submit">Register</button> 
+ :<p>register button will appear when all requirements are fulfilled</p>
+}
         </form>
 
     </div>

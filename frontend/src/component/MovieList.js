@@ -43,7 +43,7 @@ const MovieList = (props)=>{
     if(result.loading){
         return <div>Loading...</div>
     }else if(result.error){
-        return <div>Error occured!</div>
+        return <div>Can't retrieve data, please check your internet connection</div>
     }else if(result.data){
         queryResult = props.mode === "popular"? result.data.getPopularMovies : result.data.getTrendingMovies
     }
@@ -52,7 +52,7 @@ const MovieList = (props)=>{
     return <div>
     <h2 className="title-banner">{props.mode === "popular" ? "Popular Movies": "Trending Movies"}</h2>
     <div className="movie-container">
-        {queryResult.movies.map(movie=> <Movie movie={movie}/>)}
+        {queryResult.movies.map(movie=> <Movie key={movie.tmdbID} movie={movie}/>)}
     </div>
     <Pagination currentPage={currentPage} totalPage={queryResult.totalPage} setCurrentPage={setCurrentPage}/>
 </div>

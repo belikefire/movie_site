@@ -14,13 +14,11 @@ const movieResolver = {
         },
         getTrendingMovies : async (root,args)=>{
             const response = await API.axios.get(API.generateUrlForTrendingMovies(args.pageNumber))
-            console.log(response)
             const movies = response.data.results.filter(result=>(result.poster_path !== null && result.releaseDate !==""))
             return {totalPage:response.data.total_pages,movies:movies}
         },
         getPopularMovies : async (root,args)=>{
             const response = await API.axios.get(API.generateUrlForPopularMovies(args.pageNumber))
-            console.log(response)
             const movies = response.data.results.filter(result=>(result.poster_path !== null && result.releaseDate !==""))
             return {totalPage:response.data.total_pages,movies:movies}
         },

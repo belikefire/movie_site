@@ -33,7 +33,7 @@ const FavouriteMovie = (props)=>{
     
     if(result.data && props.user){
         return <div>
-        <h2 className="title-banner"><img className="heart-inline-container" src={filled_heart}></img>Favourite<img className="heart-inline-container" src={filled_heart}></img></h2>
+        <h2 className="title-banner">Favourite</h2>
         <div className="movie-container">
             {result.data.getAllFavouriteMovies.map(movie=> <Movie key={movie.tmdbID} movie={movie}/>)}
         </div>

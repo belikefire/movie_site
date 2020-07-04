@@ -20,7 +20,7 @@ const SearchField = ()=>{
   return <div>
     {errorMsg}
     <input type="text" 
-          placeholder="search keyword" 
+          placeholder="Search movie with title" 
           className="keyword-input"
           onKeyDown = {inputChange}
           ></input>

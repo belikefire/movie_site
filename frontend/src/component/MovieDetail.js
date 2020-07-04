@@ -7,6 +7,7 @@ import empty_heart from '../resources/empty_heart.png'
 import filled_heart from '../resources/filled_heart.png'
 import RecommendedMovie from './RecommendMovie'
 import Casts from './Casts'
+import back_icon from '../resources/back.png'
 
 const GET_MOVIE = gql`
 query getMovie($id:Int!){
@@ -83,7 +84,7 @@ const MovieDetail = (props) => {
 
         return <div>
         
-        <button onClick={() => history.goBack()}>BACK</button>
+        <div className="icon-inline-container" onClick={() => history.goBack()}><img src={back_icon} alt="back-icon.png"></img></div>
         <div className="flex-container-movie-detail">
         <div className="img-movie-detail">
             <img src={movie.hdImageUrl} alt="pic" />
@@ -99,7 +100,7 @@ const MovieDetail = (props) => {
             <div className="overview-movie-detail">
                 <h2>Overview</h2>
                 <p>{movie.description}</p>
-                {props.user ? <div className="heart-inline-container" onClick={AddToFavourites}>{props.user.favouriteMovies.includes(id) ? <img src={filled_heart}></img>: <img src={empty_heart}></img>}</div> : <p style={{color:'red'}}>Login to favourite this movie!</p>}
+                {props.user ? <div className="icon-inline-container" onClick={AddToFavourites}>{props.user.favouriteMovies.includes(id) ? <img src={filled_heart}></img>: <img src={empty_heart}></img>}</div> : <p style={{color:'red'}}>Login to favourite this movie!</p>}
 
             </div>
         </div>

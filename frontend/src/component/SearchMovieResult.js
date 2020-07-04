@@ -33,16 +33,20 @@ const SearchMovieResult = ()=>{
 
   if(result.loading){
     return  <div>Loading...</div>
+  }else if(result.error){
+    return <div>Can't retrieve data, please check your internet connection</div>
   }else if(result.data){
     return <div>
       <SearchField/>
+      {result.data.searchMovies.movies.length !== 0 && <h3>{`Search result for "${keyword}"`}</h3>}
        <div className="movie-container">
-           {result.data.searchMovies.length === 0 ? 
-           "No Search Result Found" : 
+           {result.data.searchMovies.movies.length === 0 ? 
+           <p>No movie found, please try with another keyword</p> : 
            result.data.searchMovies.movies.map(movie=> <Movie key={movie.imageUrl} movie={movie}/>)
            }
        </div>
-        <Pagination currentPage={currentPage} totalPage={result.data.searchMovies.totalPage} setCurrentPage={setCurrentPage} keyword={keyword}/>
+       {result.data.searchMovies.movies.length !== 0 && <Pagination currentPage={currentPage} totalPage={result.data.searchMovies.totalPage} setCurrentPage={setCurrentPage} keyword={keyword}/>}
+
      </div>
   }
   
