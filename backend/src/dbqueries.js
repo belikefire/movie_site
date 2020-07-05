@@ -1,17 +1,27 @@
 const Pool = require('pg').Pool
+const {Client } = require('pg');
 
-const pool = new Pool({
-    user: 'admin',
-    host:'localhost',
-    database:'movie_site',
-    password:'',
-    port:5432
-})
+const client = new Client({
+    connectionString:process.env.DATABASE_URL,
+    ss:{
+        rejectUnauthorized: false
+    }
+});
+
+client.connect()
+
+// const pool = new Pool({
+//     user: 'admin',
+//     host:'localhost',
+//     database:'movie_site',
+//     password:'',
+//     port:5432
+// })
 
 
 const getUser = (username) => {
     return new Promise((resolve,reject)=>{
-        pool.query('SELECT * FROM users WHERE username = $1',[username],(error,results)=>{
+        client.query('SELECT * FROM users WHERE username = $1',[username],(error,results)=>{
             if(error){
                 reject(error)
             }
@@ -24,7 +34,7 @@ const getUser = (username) => {
 
 const saveUser = (username, password) => {
     return new Promise((resolve,reject)=>{
-        pool.query('INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *', [username, password], (error, results) => {
+        client.query('INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *', [username, password], (error, results) => {
             if (error) {
               reject(error)
             }
@@ -37,7 +47,7 @@ const saveUser = (username, password) => {
 const updateMoviesListForUser = (username,tmdbId,mode) => {
     if(mode === 'append'){
         return new Promise((resolve,reject)=>{
-            pool.query('UPDATE users SET favouritemovies = array_append(favouriteMovies,$1) where username = $2 RETURNING *',[tmdbId,username],(error,results)=>{
+            client.query('UPDATE users SET favouritemovies = array_append(favouriteMovies,$1) where username = $2 RETURNING *',[tmdbId,username],(error,results)=>{
                 if(error){
                     reject(error)
                 }
@@ -46,7 +56,7 @@ const updateMoviesListForUser = (username,tmdbId,mode) => {
         })
     }else if(mode === 'remove'){
         return new Promise((resolve,reject)=>{
-            pool.query('UPDATE users SET favouritemovies = array_remove(favouriteMovies,$1) where username = $2 RETURNING *',[tmdbId,username],(error,results)=>{
+            client.query('UPDATE users SET favouritemovies = array_remove(favouriteMovies,$1) where username = $2 RETURNING *',[tmdbId,username],(error,results)=>{
                 if(error){
                     reject(error)
                 }
